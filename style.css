@@ -1,1 +1,107 @@
 /* 자유롭게 디자인 해 주세요! */
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 0, rgba(255, 38, 38, 0.5), rgba(255, 0, 0, 0) 70.71%),
+        radial-gradient(circle at 6.7% 75%, rgba(30, 30, 255, 0.5), rgba(0, 0, 255, 0) 70.71%),
+        radial-gradient(circle at 93.3% 75%, rgba(63, 255, 63, 0.287), rgba(0, 255, 0, 0) 70.71%) beige;
+}
+
+header {
+    margin: 18px 18px 0;
+}
+
+.container {
+    width: 360px;
+    height: 600px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
+}
+
+.input-box {
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: solid 1px lightgrey;
+}
+
+#todo-list-title {
+    margin: 18px;
+}
+
+.todo-list,
+.done-list {
+    width: 310px;
+    height: 156px;
+    overflow-y: scroll;
+}
+
+.delete-btn {
+    width: 15px;
+    height: 15px;
+    background-image: url(images/delete.png);
+    background-size: cover;
+    margin-left: 15px;
+    display: inline-flex;
+    border: none;
+    cursor: pointer;
+}
+
+.done-list-box {
+    margin: 18px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: rgb(236, 234, 234);
+}
+
+#todo-input,
+#todo-input:focus {
+    width: 80%;
+    height: 60%;
+    margin: 1%;
+    padding: 5%;
+    border-radius: 15px;
+    border: solid 1px lightgrey;
+    outline: none;
+}
+
+#add-todo-btn,
+#add-todo-btn:hover {
+    height: 60%;
+    margin: 1%;
+    border: none;
+    border-radius: 10px;
+    background: none;
+    cursor: pointer;
+}
+
+li,
+li:hover {
+    margin: 16px;
+    font-size: 16px;
+    cursor: pointer;
+    flex-direction: row;
+}
+
+/* 스크롤바의 폭 너비 */
+.scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(220, 20, 60); /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 둥근 테두리 */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: rgba(220, 20, 60, 0.1); /*스크롤바 뒷 배경 색상*/
+}
