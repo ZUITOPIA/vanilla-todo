@@ -12,22 +12,23 @@
             <header>📚 투두리스트</header>
             <form class="input-box">
                 <input id="todo-input" placeholder="할 일을 입력하세요" />
-                <button id="add-todo-btn">➕</button>
+                <button type="button" id="add-todo-btn">➕</button>
             </form>
 
             <section class="todo-list-box">
                 <h4 id="todo-list-title">📋 TO DO (0)</h4>
                 <ul class="todo-list">
-                    <li><span>해야 할 todo 내용</span> <i class="delete-btn"></i></li>
+                    <!-- 할 일 추가될 곳 -->
                 </ul>
             </section>
             <hr />
             <section class="done-list-box">
-                <h4>💿 DONE (0)</h4>
-                <li><span>이미 한 todo 내용</span> <i class="delete-btn"></i></li>
-                <ul></ul>
+                <h4 id="done-list-title">💿 DONE (0)</h4>
+                <ul class="done-list">
+                    <!-- 완료된 일 추가될 곳 -->
+                </ul>
             </section>
         </div>
+        <script src="/script.js"></script>
     </body>
-    <script src="script.js"></script>
 </html>

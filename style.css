@@ -31,7 +31,8 @@ header {
     border-bottom: solid 1px lightgrey;
 }
 
-#todo-list-title {
+#todo-list-title,
+#done-list-title {
     margin: 18px;
 }
 
@@ -51,10 +52,6 @@ header {
     display: inline-flex;
     border: none;
     cursor: pointer;
-}
-
-.done-list-box {
-    margin: 18px;
 }
 
 hr {
