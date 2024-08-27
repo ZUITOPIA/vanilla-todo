@@ -3,7 +3,7 @@ function handleAddTodo() {
     if (!inputValue) return; // 입력된 todo가 존재하지 않는다면 아무것도 하지 않기 위함
 
     let todos = JSON.parse(localStorage.getItem("todos")) || []; // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
-    todos.push(inputValue); // 입력된 todo를 추가
+    todos.unshift(inputValue); // 입력된 todo를 추가
 
     localStorage.setItem("todos", JSON.stringify(todos)); // update 된 객체를 localStorage 에도 update
 
@@ -48,7 +48,7 @@ function handleAddDone(index) {
     let todos = JSON.parse(localStorage.getItem("todos")) || []; // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
     let done = JSON.parse(localStorage.getItem("done")) || []; // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
 
-    done.push(todos[index]); // 선택한 todo를 done 목록으로 이동
+    done.unshift(todos[index]); // 선택한 todo를 done 목록으로 이동
     todos.splice(index, 1); // todos 배열 내에서 done 배열로 옮겨가는 것은 곧 todos 배열에서 삭제하는 것과 같음
 
     localStorage.setItem("todos", JSON.stringify(todos)); // 값이 하나 삭제된 todos 배열 Update
