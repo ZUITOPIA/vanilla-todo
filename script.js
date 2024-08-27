@@ -12,6 +12,11 @@ function handleAddTodo() {
 }
 
 document.getElementById("add-todo-btn").addEventListener("click", handleAddTodo); // +버튼에 todo 추가하는 함수 연결
+document.getElementById("todo-input").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        handleAddTodo(); // Enter 키가 눌리면 todo 추가 함수 호출
+    }
+});
 
 function renderTodos() {
     let todos = JSON.parse(localStorage.getItem("todos")) || []; // 저장해두었던 todo 목록 가져오기 (아직 없다면 빈 배열로 초기화)
