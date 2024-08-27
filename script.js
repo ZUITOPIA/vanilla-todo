@@ -13,7 +13,7 @@ function handleAddTodo() {
 
 document.getElementById("add-todo-btn").addEventListener("click", handleAddTodo); // +버튼에 todo 추가하는 함수 연결
 document.getElementById("todo-input").addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
+    if (event.isComposing && event.key === "Enter") {
         handleAddTodo(); // Enter 키가 눌리면 todo 추가 함수 호출
     }
 });
