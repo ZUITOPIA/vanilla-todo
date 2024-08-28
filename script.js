@@ -1,19 +1,24 @@
-const handleAddTodo = () => {
+function handleAddTodo() {
     let inputValue = document.getElementById("todo-input").value; // 입력한 todo 집중
     if (!inputValue) return; // 입력된 todo가 존재하지 않는다면 아무것도 하지 않기 위함
 
     let todos = JSON.parse(localStorage.getItem("todos")) || []; // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
-    todos.push(inputValue); // 입력된 todo를 추가
+    todos.unshift(inputValue); // 입력된 todo를 추가
 
     localStorage.setItem("todos", JSON.stringify(todos)); // update 된 객체를 localStorage 에도 update
 
     document.getElementById("todo-input").value = ""; // todo input 창 초기화
     renderTodos(); // todo 목록 새로고침
-};
+}
 
 document.getElementById("add-todo-btn").addEventListener("click", handleAddTodo); // +버튼에 todo 추가하는 함수 연결
+document.getElementById("todo-input").addEventListener("keydown", function (event) {
+    if (event.isComposing && event.key === "Enter") {
+        handleAddTodo(); // Enter 키가 눌리면 todo 추가 함수 호출
+    }
+});
 
-const renderTodos = () => {
+function renderTodos() {
     let todos = JSON.parse(localStorage.getItem("todos")) || []; // 저장해두었던 todo 목록 가져오기 (아직 없다면 빈 배열로 초기화)
     let todoList = document.querySelector(".todo-list"); // todo 목록 집중
 
@@ -27,9 +32,9 @@ const renderTodos = () => {
     });
 
     document.getElementById("todo-list-title").textContent = `📋 TO DO (${todos.length})`; // todo 목록에 들어있는 값의 개수
-};
+}
 
-const handleDeleteTodoItem = index => {
+function handleDeleteTodoItem(index) {
     let todos = JSON.parse(localStorage.getItem("todos")) || []; // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
 
     todos.splice(index, 1); // todos 배열 내의 index에 해당하는 값을 1개 삭제할 것
@@ -37,13 +42,13 @@ const handleDeleteTodoItem = index => {
     localStorage.setItem("todos", JSON.stringify(todos)); // update된 todos 배열 localStorage에 update
 
     renderTodos(); // todo 목록에서 하나를 삭제했으므로 목록 새로고침
-};
+}
 
-const handleAddDone = index => {
+function handleAddDone(index) {
     let todos = JSON.parse(localStorage.getItem("todos")) || []; // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
     let done = JSON.parse(localStorage.getItem("done")) || []; // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
 
-    done.push(todos[index]); // 선택한 todo를 done 목록으로 이동
+    done.unshift(todos[index]); // 선택한 todo를 done 목록으로 이동
     todos.splice(index, 1); // todos 배열 내에서 done 배열로 옮겨가는 것은 곧 todos 배열에서 삭제하는 것과 같음
 
     localStorage.setItem("todos", JSON.stringify(todos)); // 값이 하나 삭제된 todos 배열 Update
@@ -51,9 +56,9 @@ const handleAddDone = index => {
 
     renderTodos(); // update 됐으므로 새로고침
     renderDone(); // update 됐으므로 새로고침
-};
+}
 
-const renderDone = () => {
+function renderDone() {
     let done = JSON.parse(localStorage.getItem("done")) || []; // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
     let doneList = document.querySelector(".done-list"); // done-list에 집중
 
@@ -66,16 +71,16 @@ const renderDone = () => {
     });
 
     document.getElementById("done-list-title").textContent = `💿 DONE (${done.length})`; // done 목록에 들어있는 값의 개수
-};
+}
 
-const handleDeleteDoneItem = index => {
+function handleDeleteDoneItem(index) {
     let done = JSON.parse(localStorage.getItem("done")) || []; // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
     done.splice(index, 1); // done 목록에서 index에 있는 값부터 1개 삭제
 
     localStorage.setItem("done", JSON.stringify(done)); // update된 done 목록 localStorage에도 update
 
     renderDone(); // update 하였으므로 새로고침
-};
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     // 초기 렌더링 설정을 위한 코드
