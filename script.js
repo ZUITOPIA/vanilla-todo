@@ -70,17 +70,29 @@ function handleAddDone(index) {
 }
 
 function renderDone() {
-    const done = getLocalStorageItem("done"); // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+    const done = getLocalStorageItem("done"); // localStorage에 저장해둔 done 목록을 가져옴
 
-    doneList.innerHTML = ""; // (위 renderTodo 내부와 마찬가지) 새로운 목록을 업데이트하기 위해 기존 목록 초기화
+    doneList.innerHTML = ""; // 기존 목록 초기화
 
     done.forEach((todo, index) => {
-        let li = document.createElement("li"); // done 목록에 들어있는 각각의 값 마다 li 태그 붙이기
-        li.innerHTML = `<span>${todo}</span> <i class="delete-btn" onclick="handleDeleteDoneItem(${index})"></i>`; // handleAddDone 함수와 handleDeleteTodoItem의 인자로 index를 넘겨주는 기능을 한 번에 처리하기 위함
-        doneList.appendChild(li); // 클래스인 done-list의 자식 요소로 추가
+        const li = document.createElement("li"); // li 요소 생성
+
+        const span = document.createElement("span"); // span 요소 생성
+        span.textContent = todo; // todo 텍스트 추가
+
+        const deleteBtn = document.createElement("i"); // delete 버튼 생성
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.onclick = () => handleDeleteDoneItem(index);
+
+        // li 요소에 span과 delete 버튼 추가
+        li.appendChild(span);
+        li.appendChild(deleteBtn);
+
+        doneList.appendChild(li); // doneList에 li 요소를 추가
     });
 
-    doneListTitle.textContent = `💿 DONE (${done.length})`; // done 목록에 들어있는 값의 개수
+    // done 목록의 제목에 완료된 항목 수를 표시
+    doneListTitle.textContent = `💿 DONE (${done.length})`;
 }
 
 function handleDeleteDoneItem(index) {
