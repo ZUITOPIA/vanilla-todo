@@ -39,6 +39,8 @@ function renderTodos() {
         const span = document.createElement("span"); // span 요소 생성
         span.textContent = todo; // todo 텍스트 추가
 
+        span.addEventListener("click", () => handleAddDone(index));
+
         const deleteBtn = document.createElement("i"); // delete 버튼 생성
         deleteBtn.classList.add("delete-btn");
         deleteBtn.onclick = () => handleDeleteTodoItem(index);
@@ -88,6 +90,8 @@ function renderDone() {
         const span = document.createElement("span"); // span 요소 생성
         span.textContent = todo; // todo 텍스트 추가
 
+        span.addEventListener("click", () => handleMoveToTodo(index));
+
         const deleteBtn = document.createElement("i"); // delete 버튼 생성
         deleteBtn.classList.add("delete-btn");
         deleteBtn.onclick = () => handleDeleteDoneItem(index);
@@ -110,6 +114,21 @@ function handleDeleteDoneItem(index) {
     setLocalStorageItem("done", newDone); // update된 done 목록 localStorage에도 update
 
     renderDone(); // update 하였으므로 새로고침
+}
+
+// Done을 다시 Todo로
+function handleMoveToTodo(index) {
+    const done = getLocalStorageItem("done"); // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+    const todos = getLocalStorageItem("todos"); // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+
+    const newTodos = [done[index], ...todos]; // 선택된 done을 todo 배열의 맨 앞에 새로 추가
+    const newDone = done.filter((_, i) => i !== index); // Todo로 이동된 done의 index를 제외한 항목들만 남겨두기
+
+    setLocalStorageItem("todos", newTodos);
+    setLocalStorageItem("done", newDone);
+
+    renderTodos(); // 업데이트 됐으므로 새로고침
+    renderDone(); // 업데이트 됐으므로 새로고침
 }
 
 document.addEventListener("DOMContentLoaded", () => {
