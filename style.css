@@ -48,7 +48,7 @@ header {
 .todo-list,
 .done-list {
     width: 310px;
-    height: 156px;
+    height: 130px;
     overflow-y: scroll;
 }
 
