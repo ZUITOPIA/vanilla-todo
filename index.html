@@ -9,10 +9,13 @@
 
     <body>
         <div class="container">
-            <header>📚 투두리스트</header>
+            <!-- <header>📚 투두리스트</header> -->
+            <header>
+                <img id="emoji" src="/images/emoji.png" alt="이모지" />
+            </header>
             <form class="input-box">
                 <input id="todo-input" autofocus placeholder="할 일을 입력하세요" />
-                <button type="button" id="add-todo-btn">➕</button>
+                <button type="submit" id="add-todo-btn">➕</button>
             </form>
 
             <section class="todo-list-box">
@@ -21,7 +24,7 @@
                     <!-- 할 일 추가될 곳 -->
                 </ul>
             </section>
-            <hr />
+
             <section class="done-list-box">
                 <h4 id="done-list-title">💿 DONE (0)</h4>
                 <ul class="done-list">

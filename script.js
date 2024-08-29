@@ -20,9 +20,9 @@ function handleAddTodo() {
     if (!inputValue) return alert("내용을 입력해주세요!"); // 입력된 todo가 존재하지 않는다면 아무것도 하지 않기 위함
 
     const todos = getLocalStorageItem("todos"); // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
-    todos.unshift(inputValue); // 입력된 todo를 추가
+    const newTodos = [inputValue, ...todos];
 
-    setLocalStorageItem("todos", todos); // update 된 객체를 localStorage 에도 update
+    setLocalStorageItem("todos", newTodos); // update 된 객체를 localStorage 에도 update
 
     todoInput.value = ""; // todo input 창 초기화
     renderTodos(); // todo 목록 새로고침
@@ -31,15 +31,25 @@ function handleAddTodo() {
 addTodoBtn.addEventListener("click", handleAddTodo); // +버튼에 todo 추가하는 함수 연결
 
 function renderTodos() {
-    const todos = getLocalStorageItem("todos"); // 저장해두었던 todo 목록 가져오기 (아직 없다면 빈 배열로 초기화)
-
-    todoList.innerHTML = ""; // 새로운 목록을 업데이트하기 위해 기존 목록 초기화
-    // 초기화하지 않고도 배열에 추가된 항목을 화면에 표시할 수 있지만 -> 중복 문제, 성능 문제 생길 수 있음
+    const todos = getLocalStorageItem("todos"); // localStorage에 저장해둔 done 목록을 가져옴
+    todoList.innerHTML = ""; // 기존 todo 초기화
 
     todos.forEach((todo, index) => {
-        let li = document.createElement("li"); // todo 목록에 들어있는 각각의 값 마다 li 태그 붙이기
-        li.innerHTML = `<span onclick="handleAddDone(${index})">${todo}</span> <i class="delete-btn" onclick="handleDeleteTodoItem(${index})"></i>`; // handleAddDone 함수와 handleDeleteTodoItem의 인자로 index를 넘겨주는 기능을 한 번에 처리하기 위함
-        todoList.appendChild(li); // 클래스인 todo-list의 자식 요소로 추가
+        const li = document.createElement("li"); // li 요소 생성
+        const span = document.createElement("span"); // span 요소 생성
+        span.textContent = todo; // todo 텍스트 추가
+
+        span.addEventListener("click", () => handleAddDone(index));
+
+        const deleteBtn = document.createElement("i"); // delete 버튼 생성
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.onclick = () => handleDeleteTodoItem(index);
+
+        // li 요소에 span과 delete 버튼 추가
+        li.appendChild(span);
+        li.appendChild(deleteBtn);
+
+        todoList.appendChild(li); // doneList에 li 요소를 추가
     });
 
     todoListTitle.textContent = `📋 TO DO (${todos.length})`; // todo 목록에 들어있는 값의 개수
@@ -80,6 +90,8 @@ function renderDone() {
         const span = document.createElement("span"); // span 요소 생성
         span.textContent = todo; // todo 텍스트 추가
 
+        span.addEventListener("click", () => handleMoveToTodo(index));
+
         const deleteBtn = document.createElement("i"); // delete 버튼 생성
         deleteBtn.classList.add("delete-btn");
         deleteBtn.onclick = () => handleDeleteDoneItem(index);
@@ -102,6 +114,21 @@ function handleDeleteDoneItem(index) {
     setLocalStorageItem("done", newDone); // update된 done 목록 localStorage에도 update
 
     renderDone(); // update 하였으므로 새로고침
+}
+
+// Done을 다시 Todo로
+function handleMoveToTodo(index) {
+    const done = getLocalStorageItem("done"); // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+    const todos = getLocalStorageItem("todos"); // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+
+    const newTodos = [done[index], ...todos]; // 선택된 done을 todo 배열의 맨 앞에 새로 추가
+    const newDone = done.filter((_, i) => i !== index); // Todo로 이동된 done의 index를 제외한 항목들만 남겨두기
+
+    setLocalStorageItem("todos", newTodos);
+    setLocalStorageItem("done", newDone);
+
+    renderTodos(); // 업데이트 됐으므로 새로고침
+    renderDone(); // 업데이트 됐으므로 새로고침
 }
 
 document.addEventListener("DOMContentLoaded", () => {
