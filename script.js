@@ -19,7 +19,7 @@ function handleAddTodo() {
     let inputValue = todoInput.value; // 입력한 todo 집중
     if (!inputValue) return alert("내용을 입력해주세요!"); // 입력된 todo가 존재하지 않는다면 아무것도 하지 않기 위함
 
-    let todos = getLocalStorageItem("todos"); // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+    const todos = getLocalStorageItem("todos"); // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
     todos.unshift(inputValue); // 입력된 todo를 추가
 
     setLocalStorageItem("todos", todos); // update 된 객체를 localStorage 에도 update
@@ -31,7 +31,7 @@ function handleAddTodo() {
 addTodoBtn.addEventListener("click", handleAddTodo); // +버튼에 todo 추가하는 함수 연결
 
 function renderTodos() {
-    let todos = getLocalStorageItem("todos"); // 저장해두었던 todo 목록 가져오기 (아직 없다면 빈 배열로 초기화)
+    const todos = getLocalStorageItem("todos"); // 저장해두었던 todo 목록 가져오기 (아직 없다면 빈 배열로 초기화)
 
     todoList.innerHTML = ""; // 새로운 목록을 업데이트하기 위해 기존 목록 초기화
     // 초기화하지 않고도 배열에 추가된 항목을 화면에 표시할 수 있지만 -> 중복 문제, 성능 문제 생길 수 있음
@@ -46,7 +46,7 @@ function renderTodos() {
 }
 
 function handleDeleteTodoItem(index) {
-    let todos = getLocalStorageItem("todos"); // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+    const todos = getLocalStorageItem("todos"); // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
 
     todos.splice(index, 1); // todos 배열 내의 index에 해당하는 값을 1개 삭제할 것
 
@@ -56,21 +56,21 @@ function handleDeleteTodoItem(index) {
 }
 
 function handleAddDone(index) {
-    let todos = getLocalStorageItem("todos"); // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
-    let done = getLocalStorageItem("done"); // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+    const todos = getLocalStorageItem("todos"); // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+    const done = getLocalStorageItem("done"); // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
 
-    done.unshift(todos[index]); // 선택한 todo를 done 목록으로 이동
-    todos.splice(index, 1); // todos 배열 내에서 done 배열로 옮겨가는 것은 곧 todos 배열에서 삭제하는 것과 같음
+    const newDone = [todos[index], ...done]; // 선택된 todo를 done 배열의 맨 앞에 새로 추가
+    const newTodos = todos.filter((_, i) => i !== index); // Done이 된 todo의 index를 제외한 항목들만 남겨두기
 
-    setLocalStorageItem("todos", todos); // 값이 하나 삭제된 todos 배열 Update
-    setLocalStorageItem("done", done); // 값이 하나 추가된 done 배열 Update
+    setLocalStorageItem("todos", newTodos);
+    setLocalStorageItem("done", newDone);
 
     renderTodos(); // update 됐으므로 새로고침
     renderDone(); // update 됐으므로 새로고침
 }
 
 function renderDone() {
-    let done = getLocalStorageItem("done"); // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+    const done = getLocalStorageItem("done"); // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
 
     doneList.innerHTML = ""; // (위 renderTodo 내부와 마찬가지) 새로운 목록을 업데이트하기 위해 기존 목록 초기화
 
@@ -84,10 +84,10 @@ function renderDone() {
 }
 
 function handleDeleteDoneItem(index) {
-    let done = getLocalStorageItem("done"); // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
-    done.splice(index, 1); // done 목록에서 index에 있는 값부터 1개 삭제
+    const done = getLocalStorageItem("done"); // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
+    const newDone = done.filter((_, i) => i !== index);
 
-    setLocalStorageItem("done", done); // update된 done 목록 localStorage에도 update
+    setLocalStorageItem("done", newDone); // update된 done 목록 localStorage에도 update
 
     renderDone(); // update 하였으므로 새로고침
 }
