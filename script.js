@@ -1,3 +1,10 @@
+const addTodoBtn = document.getElementById("add-todo-btn");
+const todoInput = document.getElementById("todo-input");
+const doneList = document.querySelector(".done-list");
+const todoListTitle = document.getElementById("todo-list-title");
+const todoList = document.querySelector(".todo-list");
+const doneListTitle = document.getElementById("done-list-title");
+
 function handleAddTodo() {
     let inputValue = document.getElementById("todo-input").value; // 입력한 todo 집중
     if (!inputValue) return; // 입력된 todo가 존재하지 않는다면 아무것도 하지 않기 위함
@@ -11,16 +18,10 @@ function handleAddTodo() {
     renderTodos(); // todo 목록 새로고침
 }
 
-document.getElementById("add-todo-btn").addEventListener("click", handleAddTodo); // +버튼에 todo 추가하는 함수 연결
-document.getElementById("todo-input").addEventListener("keydown", function (event) {
-    if (event.isComposing && event.key === "Enter") {
-        handleAddTodo(); // Enter 키가 눌리면 todo 추가 함수 호출
-    }
-});
+addTodoBtn.addEventListener("click", handleAddTodo); // +버튼에 todo 추가하는 함수 연결
 
 function renderTodos() {
     let todos = JSON.parse(localStorage.getItem("todos")) || []; // 저장해두었던 todo 목록 가져오기 (아직 없다면 빈 배열로 초기화)
-    let todoList = document.querySelector(".todo-list"); // todo 목록 집중
 
     todoList.innerHTML = ""; // 새로운 목록을 업데이트하기 위해 기존 목록 초기화
     // 초기화하지 않고도 배열에 추가된 항목을 화면에 표시할 수 있지만 -> 중복 문제, 성능 문제 생길 수 있음
@@ -31,7 +32,7 @@ function renderTodos() {
         todoList.appendChild(li); // 클래스인 todo-list의 자식 요소로 추가
     });
 
-    document.getElementById("todo-list-title").textContent = `📋 TO DO (${todos.length})`; // todo 목록에 들어있는 값의 개수
+    todoListTitle.textContent = `📋 TO DO (${todos.length})`; // todo 목록에 들어있는 값의 개수
 }
 
 function handleDeleteTodoItem(index) {
@@ -60,7 +61,6 @@ function handleAddDone(index) {
 
 function renderDone() {
     let done = JSON.parse(localStorage.getItem("done")) || []; // localstorage에 저장해둔 done를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
-    let doneList = document.querySelector(".done-list"); // done-list에 집중
 
     doneList.innerHTML = ""; // (위 renderTodo 내부와 마찬가지) 새로운 목록을 업데이트하기 위해 기존 목록 초기화
 
@@ -70,7 +70,7 @@ function renderDone() {
         doneList.appendChild(li); // 클래스인 done-list의 자식 요소로 추가
     });
 
-    document.getElementById("done-list-title").textContent = `💿 DONE (${done.length})`; // done 목록에 들어있는 값의 개수
+    doneListTitle.textContent = `💿 DONE (${done.length})`; // done 목록에 들어있는 값의 개수
 }
 
 function handleDeleteDoneItem(index) {
