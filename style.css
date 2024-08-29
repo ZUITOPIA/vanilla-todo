@@ -1,11 +1,11 @@
 @font-face {
-    font-family: "Binggrae-Two";
-    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff") format("woff");
+    font-family: "KyoboHand";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 * {
-    font-family: "Binggrae-Two";
+    font-family: "KyoboHand";
 }
 html,
 body {
@@ -21,6 +21,8 @@ body {
 
 header {
     margin: 18px 18px 0;
+    display: flex;
+    justify-content: center;
 }
 
 .container {
@@ -36,7 +38,6 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: solid 1px lightgrey;
 }
 
 #todo-list-title,
@@ -74,9 +75,10 @@ hr {
     height: 60%;
     margin: 1%;
     padding: 5%;
-    border-radius: 15px;
-    border: solid 1px lightgrey;
     outline: none;
+    /* border-radius: 15px; */
+    border: 1px solid white;
+    border-bottom: 1px solid gray;
 }
 
 #add-todo-btn,
@@ -109,4 +111,8 @@ li:hover {
 
 .scrollbar::-webkit-scrollbar-track {
     background: rgba(220, 20, 60, 0.1); /*스크롤바 뒷 배경 색상*/
+}
+
+#emoji {
+    width: 200px;
 }
