@@ -7,7 +7,7 @@ const doneListTitle = document.getElementById("done-list-title");
 
 function handleAddTodo() {
     let inputValue = todoInput.value; // 입력한 todo 집중
-    if (!inputValue) return; // 입력된 todo가 존재하지 않는다면 아무것도 하지 않기 위함
+    if (!inputValue) return alert("내용을 입력해주세요!"); // 입력된 todo가 존재하지 않는다면 아무것도 하지 않기 위함
 
     let todos = JSON.parse(localStorage.getItem("todos")) || []; // localstorage에 저장해둔 todo를 가져와서 객체로 (아직 아무것도 없다면 빈 배열로 초기화)
     todos.unshift(inputValue); // 입력된 todo를 추가
