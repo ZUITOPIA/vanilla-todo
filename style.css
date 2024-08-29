@@ -52,6 +52,11 @@ header {
     overflow-y: scroll;
 }
 
+.done-list > li {
+    text-decoration: line-through;
+    color: rgb(158, 158, 158);
+}
+
 .delete-btn {
     width: 13px;
     height: 13px;
